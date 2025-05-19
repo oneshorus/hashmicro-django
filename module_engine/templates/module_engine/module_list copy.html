@@ -1,0 +1,32 @@
+<h2>Available Modules</h2>
+{% if request.user.is_authenticated and request.user.is_staff %}
+<form action="/admin/logout/" method="post" style="display: inline">
+  {% csrf_token %}
+  <button
+    style="
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+    "
+  >
+    Logout
+  </button>
+</form>
+{% endif %}
+<ul>
+  {% for module in modules %}
+  <li>
+    <strong>{{ module.name }}</strong> - {{ module.description }}
+    (v{{module.version}}) - {% if module.is_installed %}
+    <span style="color: green">Installed</span>
+    |
+    <a href="{% url 'upgrade-module' module.name %}">Upgrade</a>
+    |
+    <a href="{% url 'uninstall-module' module.name %}">Uninstall</a>
+    {% else %}
+    <a href="{% url 'install-module' module.name %}">Install</a>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>

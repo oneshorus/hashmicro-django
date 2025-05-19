@@ -1,0 +1,59 @@
+{% extends 'product_module/template.html' %} 
+
+{% block title %}
+    {{ title }}
+{% endblock %} 
+
+{% block product %}
+    {% for module in modules %}
+        <li><a href="/{{ module.name }}/" style="text-transform: capitalize;">{{ module.name }}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+  <div class="mui--appbar-height"></div>
+  <form method="post" class="mui-form">
+    <legend>
+      {% if is_edit %}
+        Edit Product
+      {% else %}
+        Create New Product
+      {% endif %}
+    </legend>
+    {% csrf_token %}
+
+    <div class="mui-textfield mui-textfield--float-label">
+      {{ form.name }}
+      <label for="{{ form.name.id_for_label }}">Name</label>
+      {% if form.name.errors %}
+        <div class="mui--text-danger">{{ form.name.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mui-textfield mui-textfield--float-label">
+      {{ form.barcode }}
+      <label for="{{ form.barcode.id_for_label }}">Barcode</label>
+      {% if form.barcode.errors %}
+        <div class="mui--text-danger">{{ form.barcode.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mui-textfield mui-textfield--float-label">
+      {{ form.price }}
+      <label for="{{ form.price.id_for_label }}">Price</label>
+      {% if form.price.errors %}
+        <div class="mui--text-danger">{{ form.price.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mui-textfield mui-textfield--float-label">
+      {{ form.stock }}
+      <label for="{{ form.stock.id_for_label }}">Stock</label>
+      {% if form.stock.errors %}
+        <div class="mui--text-danger">{{ form.stock.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary">Submit</button>
+  </form>
+{% endblock %}

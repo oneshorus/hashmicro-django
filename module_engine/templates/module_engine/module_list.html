@@ -1,0 +1,47 @@
+{% extends 'product_module/template.html' %} 
+
+{% block title %}
+    {{ title }}
+{% endblock %} 
+
+{% block product %}
+    {% for module in modules %}
+      {% if module.is_installed %}
+        <li><a href="/{{ module.name }}/" style="text-transform: capitalize;">{{ module.name }}</a></li>
+      {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+    <h2 style="text-transform: capitalize;">{{ current_module }}</h2>
+    
+    <table class="mui-table mui-table--bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Version</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for module in modules %}
+                <tr>
+                    <td>{{ module.name }}</td>
+                    <td>{{ module.description }}</td>
+                    <td>{{ module.new_version }}</td>
+                    <td>
+                      {% if not module.is_installed %}
+                        <button class="mui-btn mui-btn--flat mui-btn--primary" onclick="location.href='{% url 'install-module' module.name %}'">Install</button>
+                      {% else %}
+                        {% if module.version != module.new_version %}
+                          <button class="mui-btn mui-btn--flat mui-btn--primary" onclick="location.href='{% url 'upgrade-module' module.name %}'">Upgrade</button>
+                        {% endif %}
+                        <button class="mui-btn mui-btn--flat mui-btn--danger" onclick="location.href='{% url 'uninstall-module' module.name %}'">Uninstall</button>
+                      {% endif %}
+                    </td>
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+{% endblock %}

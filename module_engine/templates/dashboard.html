@@ -1,0 +1,15 @@
+{% extends 'product_module/template.html' %} 
+
+{% block title %}
+  {{ title }}
+{% endblock %} 
+
+{% block product %}
+    {% for module in modules %}
+        <li><a href="/{{ module.name }}/" style="text-transform: capitalize;">{{ module.name }}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block content %} 
+  <h1>Welcome!!</h1> 
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'product_module/template.html' %} 
+
+{% block title %}
+    {{ title }}
+{% endblock %} 
+
+{% block product %}
+    {% for module in modules %}
+        <li><a href="/{{ module.name }}/" style="text-transform: capitalize;">{{ module.name }}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+    <h2 style="text-transform: capitalize;">{{ current_module }}</h2>
+    {% if access.allowed_create %}
+        <button class="mui-btn mui-btn--primary" onclick="location.href='{{ request.path }}create/'">Add New Product</button>
+    {% endif %}
+    <table class="mui-table mui-table--bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Barcode</th>
+                <th>Price</th>
+                <th>Stock</th>
+                {% if not request.user.is_superuser %}
+                    {% if access.allowed_update or access.allowed_delete %}
+                        <th>Action</th>
+                    {% endif %}
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.barcode }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.stock }}</td>
+                    {% if not request.user.is_superuser %}
+                        {% if access.allowed_update or access.allowed_delete %}
+                            <td>
+                                {% if access.allowed_update %}
+                                    <button class="mui-btn mui-btn--flat" onclick="location.href='{{ request.path }}update/{{ product.pk }}'">Edit</button>
+                                {% endif %} 
+                                {% if access.allowed_delete %}
+                                    <button class="mui-btn mui-btn--flat mui-btn--danger" onclick="confirmDelete({{ product.pk }})">Delete</button>
+                                {% endif %} 
+                            </td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+    <script>
+        function confirmDelete(productId) {
+        if (!confirm("Are you sure you want to delete this product?")) return;
+
+        fetch(`{{ request.path }}delete/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Delete failed");
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message || "Deleted successfully.");
+            location.reload();
+        })
+        .catch(error => {
+            alert("Error: " + error.message);
+        });
+        }
+        </script>
+{% endblock %}
