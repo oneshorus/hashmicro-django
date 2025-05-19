@@ -3,12 +3,12 @@
 This project implements a Django-based modular application system where modules can be dynamically managed (install, upgrade, uninstall). The frontend is developed using MUI, providing a clean and responsive interface.
 
 
-🧩 Features
+## 🧩 Features
 
-## Backend (Django)
+### Backend (Django)
 	•	Modular engine using dynamic imports (importlib)
 	•	Admin interface to install, upgrade, or uninstall modules
-	•	Role-based access control (RBAC): Admin, User, Public
+	•	Role-based access control (RBAC): Manager, User, Public
 	•	Module landing pages registered automatically
 	•	User interface to CRUD products
 
@@ -28,9 +28,9 @@ project-root/
 
 
 
-🚀 Getting Started
+## 🚀 Getting Started
 
-## Backend Setup
+### Backend Setup
 ```
 cd project-root
 python -m venv venv
@@ -40,23 +40,28 @@ python manage.py runserver
 ```
 
 
+## 🌐 Project Preview
 
-🔐 Role-Based Access
+[🚀 Live Demo](https://wawansetiawan.pythonanywhere.com)
+
+
+### 🔐 Role-Based Access
 ```
----------|------------------------------|
-| Role   | Permissions                  |
----------|------------------------------|
-| Admin  | Create, Read, Update, Delete |
-| User   | Create, Read, Update         |
-| Public | Read Only                    |
----------|------------------------------|
+-------------|------------------------------|----------------|-----------|
+| Role       | Permissions                  | Username       | Password  |
+-------------|------------------------------|----------------|-----------|
+| Admin      | Create, Read, Update, Delete | wawansetiawan	 | qwerty    |
+| Manager  	 | Create, Read, Update, Delete | manager1    	 | admin123  |
+| User   	 | Create, Read, Update         | user1          | user123   |
+| Public 	 | Read Only                    | 				 |           |
+-------------|------------------------------|----------------|-----------|
 ```
 
 Roles/Group are assigned in the Django admin panel.
 
 
 
-🧪 Example Modules
+### 🧪 Example Modules
 
 A sample module project01_module is provided with:
 - A dedicated landing page
@@ -65,6 +70,17 @@ A sample module project01_module is provided with:
 
 
 
-🖼️ ERD & Flowchart
+### 🖼️ ERD & Flowchart
 
 See the /docs folder for the ERD and Flowchart.
+
+
+### 🔒 Access Control Note
+
+```
+⚠️ Module Management Menu is only visible when:
+	•	No user is logged in (public access)
+	•	Or the logged-in user is an admin
+
+🚫 It will not be displayed to users with manager or user roles when logged in, as it is intended to facilitate easier access.
+```
