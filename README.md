@@ -50,10 +50,10 @@ python manage.py runserver
 -------------|------------------------------|----------------|-----------|
 | Role       | Permissions                  | Username       | Password  |
 -------------|------------------------------|----------------|-----------|
-| Admin      | Create, Read, Update, Delete | wawansetiawan	 | qwerty    |
-| Manager  	 | Create, Read, Update, Delete | manager1    	 | admin123  |
-| User   	 | Create, Read, Update         | user1          | user123   |
-| Public 	 | Read Only                    | 				 |           |
+| Admin      | Create, Read, Update, Delete | wawansetiawan  | qwerty    |
+| Manager    | Create, Read, Update, Delete | manager1       | admin123  |
+| User       | Create, Read, Update         | user1          | user123   |
+| Public     | Read Only                    | 		     |           |
 -------------|------------------------------|----------------|-----------|
 ```
 
